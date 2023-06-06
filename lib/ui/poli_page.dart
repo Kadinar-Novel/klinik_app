@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:klinik_app/model/poli.dart';
-import 'package:klinik_app/ui/poli_detail.dart';
+import '../model/poli.dart';
+import 'poli_detail.dart';
+import 'poli_item.dart';
+import 'poli_form.dart';
+import 'package:klinik_app/ui/widget/sidebar.dart';
 
 class PoliPage extends StatefulWidget {
   const PoliPage({super.key});
@@ -13,47 +16,25 @@ class _PoliPageState extends State<PoliPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Data Poli")),
+      drawer: Sidebar(),
+      appBar: AppBar(
+        title: const Text("Data Poli"),
+        actions: [
+          GestureDetector(
+            child: const Icon(Icons.add),
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => PoliForm()));
+            },
+          )
+        ],
+      ),
       body: ListView(
         children: [
-          GestureDetector(
-            child: Card(
-              child: ListTile(
-                title: const Text("Poli Anak"),
-              ),
-            ),
-            onTap: () {
-              Poli poliAnak = new Poli(namaPoli: "Poli Anak");
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PoliDetail(poli: poliAnak)));
-            },
-          ),
-          GestureDetector(
-            child: Card(
-              child: ListTile(
-                title: const Text("Poli Kandungan"),
-              ),
-            ),
-            onTap: () {
-              Poli poliAnak = new Poli(namaPoli: "Poli kandungan");
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PoliDetail(poli: poliAnak)));
-            },
-          ),
-          Card(
-            child: ListTile(
-              title: const Text("Poli Gigi"),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: const Text("Poli THT"),
-            ),
-          )
+          PoliItem(poli: Poli(namaPoli: "Poli Anak")),
+          PoliItem(poli: Poli(namaPoli: "Poli Kandungan")),
+          PoliItem(poli: Poli(namaPoli: "Poli Gigi")),
+          PoliItem(poli: Poli(namaPoli: "Poli THT")),
         ],
       ),
     );
